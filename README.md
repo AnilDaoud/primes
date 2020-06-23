@@ -2,8 +2,10 @@
 Find prime numbers below n - various algorithms
 
 All hail StackOverflow
+
 https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n
 
+```console
 % python3 primes.py
 3.8.3
 macOS-10.15.5-x86_64-i386-64bit
@@ -53,5 +55,5 @@ dlkjfslkfjslkjf and sdlkfjslfjdsjf are NOT anagram of each other
 
 % python3 anagram.py dlkjfslkfjslkjf dlkjlsfkfjslkjf
 dlkjfslkfjslkjf and dlkjlsfkfjslkjf are anagram of each other
-
+```
 
