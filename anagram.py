@@ -1,22 +1,22 @@
 from math import log, prod
-import string
+from string import ascii_lowercase
 import sys
 from primes import rwh_primes2 as primelistfunc
 
 if len(sys.argv) < 3:
     sys.exit(2)
 
-n = len(string.ascii_lowercase)
+n = len(ascii_lowercase)
 # https://en.wikipedia.org/wiki/Prime_number_theorem#Approximations_for_the_nth_prime_number
 upperbound = int(max(6, n*log(n) + n*log(log(n)))+1)
 
 primeList = primelistfunc(upperbound)
 
-primedict = dict(zip(string.ascii_lowercase, primeList[:n]))
+primedict = dict(zip(ascii_lowercase, primeList[:n]))
 
 def processword(word):
     # ignore non-ascii characters
-    return prod([primedict.get(l,1) for l in list(word)])
+    return prod([primedict.get(l,1) for l in word])
 
 def is_anagram(word1, word2):
     return processword(word1) == processword(word2)
