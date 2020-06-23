@@ -32,9 +32,12 @@ primeList = rwh_primes2(upperbound)
 primedict = dict(zip(string.ascii_lowercase, primeList[:26]))
 
 def processword(word):
-    return prod([primedict[l] for l in list(word)])
+    return prod([primedict.get(l,1) for l in list(word)])
 
-if processword(sys.argv[1]) == processword(sys.argv[2]):
+def is_anagram(word1, word2):
+    return processword(word1) == processword(word2)
+
+if is_anagram(sys.argv[1],sys.argv[2]):
     print("%s and %s are anagram of each other" % (sys.argv[1], sys.argv[2]))
 else:
     print("%s and %s are NOT anagram of each other" % (sys.argv[1], sys.argv[2]))
