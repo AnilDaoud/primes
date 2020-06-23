@@ -12,7 +12,7 @@ upperbound = int(max(6, n*log(n) + n*log(log(26)))+1)
 
 primeList = primelistfunc(upperbound)
 
-primedict = dict(zip(string.ascii_lowercase, primeList[:26]))
+primedict = dict(zip(string.ascii_lowercase, primeList[:n]))
 
 def processword(word):
     # ignore non-ascii characters
