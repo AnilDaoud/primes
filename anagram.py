@@ -6,7 +6,7 @@ from primes import rwh_primes2 as primelistfunc
 if len(sys.argv) < 3:
     sys.exit(2)
 
-n = len(string.ascii_uppercase)
+n = len(string.ascii_lowercase)
 # https://en.wikipedia.org/wiki/Prime_number_theorem#Approximations_for_the_nth_prime_number
 upperbound = int(max(6, n*log(n) + n*log(log(n)))+1)
 
