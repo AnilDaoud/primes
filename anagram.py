@@ -8,7 +8,7 @@ if len(sys.argv) < 3:
 
 n = len(string.ascii_uppercase)
 # https://en.wikipedia.org/wiki/Prime_number_theorem#Approximations_for_the_nth_prime_number
-upperbound = int(max(6, n*log(n) + n*log(log(26)))+1)
+upperbound = int(max(6, n*log(n) + n*log(log(n)))+1)
 
 primeList = primelistfunc(upperbound)
 
