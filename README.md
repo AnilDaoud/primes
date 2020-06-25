@@ -53,7 +53,8 @@ ambi_sieve_plain: 6139.54 seconds
 % python3 anagram.py dlkjfslkfjslkjf sdlkfjslfjdsjf
 dlkjfslkfjslkjf and sdlkfjslfjdsjf are NOT anagram of each other
 
-% python3 anagram.py dlkjfslkfjslkjf dlkjlsfkfjslkjf
-dlkjfslkfjslkjf and dlkjlsfkfjslkjf are anagram of each other
+% python3 anagram.py EÈÉÊË èéeêë
+EÈÉÊË and èéeêë are anagram of each other
+
 ```
 
