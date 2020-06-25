@@ -90,6 +90,34 @@ def erat3( ):
 def get_primes_erat3(n):
   return list(itertools.takewhile(lambda p: p<n, erat3()))
 
+# https://stackoverflow.com/a/19391111
+def psieve():
+    yield from (2, 3, 5, 7)
+    D = {}
+    ps = psieve()
+    next(ps)
+    p = next(ps)
+    assert p == 3
+    psq = p*p
+    for i in itertools.count(9, 2):
+        if i in D:      # composite
+            step = D.pop(i)
+        elif i < psq:   # prime
+            yield i
+            continue
+        else:           # composite, = p*p
+            assert i == psq
+            step = 2*p
+            p = next(ps)
+            psq = p*p
+        i += step
+        while i in D:
+            i += step
+        D[i] = step
+
+def get_primes_psieve(n):
+  return list(itertools.takewhile(lambda p: p<n, psieve()))
+
 def rwh_primes(n):
     # https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
     """ Returns  a list of primes < n """
@@ -591,27 +619,16 @@ def ambi_sieve_plain(n):
     return [2] + [t for t in s if t > 0]
 
 
-# has issues, do not use (v slow, might not work when n is odd)
-def sundaram3(n):
-    # https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/2073279#2073279
-    numbers = list(range(3, n + 1, 2))
-    half = n//2
-    initial = 4
-    for step in range(3, n + 1, 2):
-        for i in range(initial, half, step):
-            numbers[i-1] = 0
-        initial += 2 * (step + 1)
-        if initial > half:
-            return [2] + list(filter(None, numbers))
-
 import platform, timeit
 
 if __name__ == '__main__':
     print(platform.python_version())
     print(platform.platform())
-    functionList = [naiveprimes, popprimes, get_primes_erat2, get_primes_erat2a, get_primes_erat3, rwh_primes, rwh_primes1, rwh_primes2, sieve_wheel_30, sieve_of_eratosthenes, sieve_of_atkin, ambi_sieve_plain]
-    n = 100000
+    functionList = [naiveprimes, popprimes, get_primes_erat2, get_primes_erat2a, get_primes_erat3, get_primes_psieve, rwh_primes, rwh_primes1, rwh_primes2, sieve_wheel_30, sieve_of_eratosthenes, sieve_of_atkin, ambi_sieve_plain]
     primes = []
+    it = 4
+    n = 10**7
+    print("==== Primes below " + str(n) + " ====")
     for f in functionList:
         if len(primes) == 0:
             func = f.__name__
@@ -622,17 +639,8 @@ if __name__ == '__main__':
             func = f.__name__
             primes = f(n)
             if prevPrimes != primes:
-                print("Error: %s and %s return different prime list" % (fund, prevFunc))
+                print("Error: %s and %s return different prime list" % (func, prevFunc))
                 break
-    it = 4
-    for pw in range(5, 10):
-        print("==== Primes below " + str(10**pw) + " ====")
-        for f in functionList:
-            if (10**pw) >= 10000000 and f.__name__ in ['naiveprimes','popprimes']:
-                print("Skipping %s, too slow for large numbers" % f.__name__)
-            elif (10**pw) >= 100000000 and f.__name__.startswith('get_primes_erat'):
-                print("Skipping %s, too slow for large numbers" % f.__name__)
-            else:
-                print("%s: %.2f seconds" % (f.__name__, timeit.timeit(f.__name__ + '('+str(10**pw)+')', number=it, globals=globals())))
+        print("%s: %.2f seconds" % (f.__name__, timeit.timeit(f.__name__ + '('+str(n)+')', number=it, globals=globals())))
 
 
