@@ -13,17 +13,6 @@ def naiveprimes(n):
         i += 1
     return primes
 
-# https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n/3035188#3035188
-# works in python 3.x as sets and dict are ordered
-def popprimes(n):
-    numbers = set(range(n, 1, -1))
-    primes = []
-    while numbers:
-        p = numbers.pop()
-        primes.append(p)
-        numbers.difference_update(range(p*2, n+1, p))
-    return primes
-
 # https://stackoverflow.com/a/2068412
 # https://stackoverflow.com/questions/2211990/how-to-implement-an-efficient-infinite-generator-of-prime-numbers-in-python/3796442#3796442
 import itertools
@@ -624,10 +613,10 @@ import platform, timeit
 if __name__ == '__main__':
     print(platform.python_version())
     print(platform.platform())
-    functionList = [naiveprimes, popprimes, get_primes_erat2, get_primes_erat2a, get_primes_erat3, get_primes_psieve, rwh_primes, rwh_primes1, rwh_primes2, sieve_wheel_30, sieve_of_eratosthenes, sieve_of_atkin, ambi_sieve_plain]
+    functionList = [naiveprimes, get_primes_erat2, get_primes_erat2a, get_primes_erat3, get_primes_psieve, rwh_primes, rwh_primes1, rwh_primes2, sieve_wheel_30, sieve_of_eratosthenes, sieve_of_atkin, ambi_sieve_plain]
     primes = []
     it = 4
-    n = 10**7
+    n = 10**6
     print("==== Primes below " + str(n) + " ====")
     for f in functionList:
         if len(primes) == 0:
