@@ -1,5 +1,95 @@
 from math import sqrt, ceil
 
+# bruteforce function, ultra slow
+def naiveprimes(n):
+    i = 2
+    primes = []
+    while i < n:
+        for x in range(2, int(sqrt(i) + 1)):
+            if i%x==0:
+                break
+        else:
+            primes.append(i)
+        i += 1
+    return primes
+
+# https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n/3035188#3035188
+# works in python 3.x as sets and dict are ordered
+def popprimes(n):
+    numbers = set(range(n, 1, -1))
+    primes = []
+    while numbers:
+        p = numbers.pop()
+        primes.append(p)
+        numbers.difference_update(range(p*2, n+1, p))
+    return primes
+
+# https://stackoverflow.com/a/2068412
+# https://stackoverflow.com/questions/2211990/how-to-implement-an-efficient-infinite-generator-of-prime-numbers-in-python/3796442#3796442
+import itertools
+def erat2( ):
+    D = {  }
+    yield 2
+    for q in itertools.islice(itertools.count(3), 0, None, 2):
+        p = D.pop(q, None)
+        if p is None:
+            D[q*q] = q
+            yield q
+        else:
+            x = p + q
+            while x in D or not (x&1):
+                x += p
+            D[x] = p
+
+def get_primes_erat2(n):
+  return list(itertools.takewhile(lambda p: p<n, erat2()))
+
+def erat2a( ):
+    D = {  }
+    yield 2
+    for q in itertools.islice(itertools.count(3), 0, None, 2):
+        p = D.pop(q, None)
+        if p is None:
+            D[q*q] = q
+            yield q
+        else:
+            # old code here:
+            # x = p + q
+            # while x in D or not (x&1):
+            #     x += p
+            # changed into:
+            x = q + 2*p
+            while x in D:
+                x += 2*p
+            D[x] = p
+
+def get_primes_erat2a(n):
+  return list(itertools.takewhile(lambda p: p<n, erat2a()))
+
+def erat3( ):
+    D = { 9: 3, 25: 5 }
+    yield 2
+    yield 3
+    yield 5
+    MASK= 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0,
+    MODULOS= frozenset( (1, 7, 11, 13, 17, 19, 23, 29) )
+
+    for q in itertools.compress(
+            itertools.islice(itertools.count(7), 0, None, 2),
+            itertools.cycle(MASK)):
+        p = D.pop(q, None)
+        if p is None:
+            D[q*q] = q
+            yield q
+        else:
+            x = q + 2*p
+            while x in D or (x%30) not in MODULOS:
+                x += 2*p
+            D[x] = p
+
+def get_primes_erat3(n):
+  return list(itertools.takewhile(lambda p: p<n, erat3()))
+
 def rwh_primes(n):
     # https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
     """ Returns  a list of primes < n """
@@ -519,7 +609,7 @@ import platform, timeit
 if __name__ == '__main__':
     print(platform.python_version())
     print(platform.platform())
-    functionList = [rwh_primes, rwh_primes1, rwh_primes2, sieve_wheel_30, sieve_of_eratosthenes, sieve_of_atkin, ambi_sieve_plain]
+    functionList = [naiveprimes, popprimes, get_primes_erat2, get_primes_erat2a, get_primes_erat3, rwh_primes, rwh_primes1, rwh_primes2, sieve_wheel_30, sieve_of_eratosthenes, sieve_of_atkin, ambi_sieve_plain]
     n = 100000
     primes = []
     for f in functionList:
@@ -538,4 +628,11 @@ if __name__ == '__main__':
     for pw in range(5, 10):
         print("==== Primes below " + str(10**pw) + " ====")
         for f in functionList:
-            print("%s: %.2f seconds" % (f.__name__, timeit.timeit(f.__name__ + '('+str(10**pw)+')', number=it, globals=globals())))
+            if (10**pw) >= 10000000 and f.__name__ in ['naiveprimes','popprimes']:
+                print("Skipping %s, too slow for large numbers" % f.__name__)
+            elif (10**pw) >= 100000000 and f.__name__.startswith('get_primes_erat'):
+                print("Skipping %s, too slow for large numbers" % f.__name__)
+            else:
+                print("%s: %.2f seconds" % (f.__name__, timeit.timeit(f.__name__ + '('+str(10**pw)+')', number=it, globals=globals())))
+
+
