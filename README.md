@@ -8,6 +8,9 @@ dlkjfslkfjslkjf and sdlkfjslfjdsjf are NOT anagram of each other
 % python3 anagram.py EÈÉÊË èéeêë
 EÈÉÊË and èéeêë are anagram of each other
 
+% python3 anagram.py "eleven plus two" "twelve plus one"
+eleven plus two and twelve plus one are anagram of each other
+
 % python3 primes.py
 3.8.3
 macOS-10.15.5-x86_64-i386-64bit
