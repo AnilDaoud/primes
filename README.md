@@ -24,6 +24,7 @@ sieve_wheel_30: 0.18 seconds
 sieve_of_eratosthenes: 0.18 seconds
 sieve_of_atkin: 0.64 seconds
 ambi_sieve_plain: 0.48 seconds
+sundaram: 1.00 seconds
 
 ```
 

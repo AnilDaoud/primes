@@ -13,11 +13,28 @@ def naiveprimes(n):
         i += 1
     return primes
 
+# pythonic (moronic) version, super slow
+def pythonicprimes(n):
+    noprimes = [j for i in range(2, int(sqrt(n))+1) for j in range(i*2, n, i)]
+    return [x for x in range(2, n) if x not in noprimes]
+
+# need to resort the set each time makes this version painfully slow too
+def popprimes(n):
+    numbers = list(range(n-1, 1, -1))
+    primes = []
+    while numbers:
+        p = numbers.pop()
+        primes.append(p)
+        numbers = set(numbers)
+        numbers.difference_update(range(p*2, n, p))
+        numbers = sorted(numbers, reverse = True)
+    return primes
+
 # https://stackoverflow.com/a/2068412
 # https://stackoverflow.com/questions/2211990/how-to-implement-an-efficient-infinite-generator-of-prime-numbers-in-python/3796442#3796442
 import itertools
-def erat2( ):
-    D = {  }
+def erat2():
+    D = {}
     yield 2
     for q in itertools.islice(itertools.count(3), 0, None, 2):
         p = D.pop(q, None)
@@ -607,15 +624,26 @@ def ambi_sieve_plain(n):
                 s[t] = 0
     return [2] + [t for t in s if t > 0]
 
+# https://plus.maths.org/content/os/issue50/features/havil/index
+def sundaram(n):
+    numbers = list(range(3, n, 2))
+    half = n//2
+    initial = 4
+    for step in range(3, n+1, 2):
+        for i in range(initial, half, step):
+            numbers[i-1] = 0
+        initial += 2*(step+1)
+        if initial > half:
+            return [2] + list(filter(None, numbers))
 
 import platform, timeit
 
 if __name__ == '__main__':
     print(platform.python_version())
     print(platform.platform())
-    functionList = [naiveprimes, get_primes_erat2, get_primes_erat2a, get_primes_erat3, get_primes_psieve, rwh_primes, rwh_primes1, rwh_primes2, sieve_wheel_30, sieve_of_eratosthenes, sieve_of_atkin, ambi_sieve_plain]
+    functionList = [naiveprimes, get_primes_erat2, get_primes_erat2a, get_primes_erat3, get_primes_psieve, rwh_primes, rwh_primes1, rwh_primes2, sieve_wheel_30, sieve_of_eratosthenes, sieve_of_atkin, ambi_sieve_plain, sundaram]
     primes = []
-    it = 4
+    it = 5
     n = 10**6
     print("==== Primes below " + str(n) + " ====")
     for f in functionList:
