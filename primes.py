@@ -1,6 +1,6 @@
 from math import sqrt, ceil
 
-# bruteforce function, ultra slow
+# bruteforce function, slow but still faster than double loop (pythonic) and popprime implementation
 def naiveprimes(n):
     i = 2
     primes = []
@@ -641,23 +641,16 @@ import platform, timeit
 if __name__ == '__main__':
     print(platform.python_version())
     print(platform.platform())
-    functionList = [naiveprimes, get_primes_erat2, get_primes_erat2a, get_primes_erat3, get_primes_psieve, rwh_primes, rwh_primes1, rwh_primes2, sieve_wheel_30, sieve_of_eratosthenes, sieve_of_atkin, ambi_sieve_plain, sundaram]
+    slowfunctionList = [naiveprimes, pythonicprimes, popprimes, get_primes_erat2, get_primes_erat2a, get_primes_erat3, get_primes_psieve, rwh_primes, rwh_primes1, rwh_primes2, sieve_wheel_30, sieve_of_eratosthenes, sieve_of_atkin, ambi_sieve_plain, sundaram]
+    functionList = [get_primes_erat2, get_primes_erat2a, get_primes_erat3, get_primes_psieve, rwh_primes, rwh_primes1, rwh_primes2, sieve_wheel_30, sieve_of_eratosthenes, sieve_of_atkin, ambi_sieve_plain, sundaram]
     primes = []
     it = 5
-    n = 10**6
+    n = 10**4
+    print("==== Primes below " + str(n) + " ====")
+    for f in slowfunctionList:
+        print("%s: %.2f seconds" % (f.__name__, timeit.timeit(f.__name__ + '('+str(n)+')', number=it, globals=globals())))
+    n = 10**7
     print("==== Primes below " + str(n) + " ====")
     for f in functionList:
-        if len(primes) == 0:
-            func = f.__name__
-            primes = f(n)
-        else:
-            prevPrimes = primes
-            prevFunc = func
-            func = f.__name__
-            primes = f(n)
-            if prevPrimes != primes:
-                print("Error: %s and %s return different prime list" % (func, prevFunc))
-                break
         print("%s: %.2f seconds" % (f.__name__, timeit.timeit(f.__name__ + '('+str(n)+')', number=it, globals=globals())))
-
 

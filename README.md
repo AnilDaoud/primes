@@ -11,20 +11,35 @@ EÈÉÊË and èéeêë are anagram of each other
 % python3 primes.py
 3.8.3
 macOS-10.15.5-x86_64-i386-64bit
-==== Primes below 1000000 ====
-naiveprimes: 20.78 seconds
-get_primes_erat2: 1.58 seconds
-get_primes_erat2a: 0.99 seconds
-get_primes_erat3: 0.80 seconds
-get_primes_psieve: 0.84 seconds
-rwh_primes: 0.15 seconds
-rwh_primes1: 0.16 seconds
-rwh_primes2: 0.13 seconds
-sieve_wheel_30: 0.18 seconds
-sieve_of_eratosthenes: 0.18 seconds
-sieve_of_atkin: 0.64 seconds
-ambi_sieve_plain: 0.48 seconds
-sundaram: 1.00 seconds
+==== Primes below 10000 ====
+naiveprimes: 0.07 seconds
+pythonicprimes: 8.42 seconds
+popprimes: 0.43 seconds
+get_primes_erat2: 0.01 seconds
+get_primes_erat2a: 0.01 seconds
+get_primes_erat3: 0.01 seconds
+get_primes_psieve: 0.01 seconds
+rwh_primes: 0.00 seconds
+rwh_primes1: 0.00 seconds
+rwh_primes2: 0.00 seconds
+sieve_wheel_30: 0.00 seconds
+sieve_of_eratosthenes: 0.00 seconds
+sieve_of_atkin: 0.01 seconds
+ambi_sieve_plain: 0.00 seconds
+sundaram: 0.01 seconds
+==== Primes below 10000000 ====
+get_primes_erat2: 26.81 seconds
+get_primes_erat2a: 16.64 seconds
+get_primes_erat3: 19.23 seconds
+get_primes_psieve: 31.37 seconds
+rwh_primes: 5.33 seconds
+rwh_primes1: 6.55 seconds
+rwh_primes2: 2.98 seconds
+sieve_wheel_30: 4.13 seconds
+sieve_of_eratosthenes: 2.99 seconds
+sieve_of_atkin: 10.28 seconds
+ambi_sieve_plain: 8.59 seconds
+sundaram: 16.08 seconds
 
 ```
 
