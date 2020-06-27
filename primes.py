@@ -50,8 +50,8 @@ def erat2():
 def get_primes_erat2(n):
   return list(itertools.takewhile(lambda p: p<n, erat2()))
 
-def erat2a( ):
-    D = {  }
+def erat2a():
+    D = {}
     yield 2
     for q in itertools.islice(itertools.count(3), 0, None, 2):
         p = D.pop(q, None)
@@ -72,14 +72,13 @@ def erat2a( ):
 def get_primes_erat2a(n):
   return list(itertools.takewhile(lambda p: p<n, erat2a()))
 
-def erat3( ):
-    D = { 9: 3, 25: 5 }
+def erat3():
+    D = {9: 3, 25: 5}
     yield 2
     yield 3
     yield 5
     MASK= 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0,
     MODULOS= frozenset( (1, 7, 11, 13, 17, 19, 23, 29) )
-
     for q in itertools.compress(
             itertools.islice(itertools.count(7), 0, None, 2),
             itertools.cycle(MASK)):
@@ -124,8 +123,8 @@ def psieve():
 def get_primes_psieve(n):
   return list(itertools.takewhile(lambda p: p<n, psieve()))
 
+# https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
 def rwh_primes(n):
-    # https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
     """ Returns  a list of primes < n """
     sieve = [True] * n
     for i in range(3, int(n ** 0.5) + 1, 2):
@@ -134,8 +133,8 @@ def rwh_primes(n):
     return [2] + [i for i in range(3, n, 2) if sieve[i]]
 
 
+# https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
 def rwh_primes1(n):
-    # https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
     """ Returns  a list of primes < n """
     sieve = [True] * (n // 2)
     for i in range(3, int(n ** 0.5) + 1, 2):
@@ -144,8 +143,8 @@ def rwh_primes1(n):
     return [2] + [2 * i + 1 for i in range(1, n // 2) if sieve[i]]
 
 
+# https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
 def rwh_primes2(n):
-    # https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
     """Input n>=6, Returns a list of primes, 2 <= p < n"""
     assert n >= 6
     correction = n % 6 > 1
@@ -164,8 +163,8 @@ def rwh_primes2(n):
     return [2, 3] + [3 * i + 1 | 1 for i in range(1, n // 3 - correction) if sieve[i]]
 
 
+# http://zerovolt.com/?p=88
 def sieve_wheel_30(N):
-    # http://zerovolt.com/?p=88
     """ Returns a list of primes <= N using wheel criterion 2*3*5 = 30
 
 Copyright 2009 by zerovolt.com
